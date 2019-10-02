@@ -1,0 +1,40 @@
+.col-sm-3 p {
+    width: 250px;
+    height: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .col-sm-3 a {
+    color: #2c2c2c;
+    font-weight: bold;
+  }
+
+  .btn-warning a{
+      color: black;
+      font-weight: bold;
+  }
+  .btn-primary a{
+      color: black;
+      font-weight: bold;
+  }
+
+  .btn-danger a{
+    color: black;
+    font-weight: bold;
+ }
+
+  .text-center a{
+    color: black;
+    font-weight: bold;
+  }
+
+  .container h1 {
+    color: black;
+    font-weight: bold;
+  }
+
+
+
+

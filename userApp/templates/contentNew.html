@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>Newbie Blog</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">   
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>   
+        <link rel="stylesheet" href="{% static 'css/userApp.css' %}">
+    </head>
+        
+
+    <body>
+        <div class="jumbotron text-center">
+            <h1><a href="/">First newbie Blog</a></h1>
+            <p>Wassap mananap!!!</p> 
+        </div>
+
+        <div class="container">
+            <h2>Add new post</h2>
+            <div class="form-group">
+                <form method="POST">{% csrf_token %}
+            
+                    {{ form.as_p }}
+                
+                <button type="submit" class="btn btn-default">Save</button>
+                </form>
+            </div>
+
+        </div>
+
+        
+        
+    </body>
+</html>

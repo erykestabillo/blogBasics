@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>Newbie Blog</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">   
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>   
+        <link rel="stylesheet" href="{% static 'css/userApp.css' %}">
+    </head>
+
+    <body>
+        <div class="jumbotron text-center">
+            <h1><a href="/">First newbie Blog</a></h1>
+            <p>Wassap mananap!!!</p> 
+        </div>
+       
+
+        <div class="container">
+            <div class="row">
+                <i>{{ queryset.datePublished }}</i>
+                <h1>{{ queryset.title }}</h1>
+                <p>{{ queryset.cont }}</p>
+                <button type="button" class="btn btn-primary"><a  href="{% url 'contEdit' content_id=queryset.id %}">Edit</a></button>
+                <button type="button" class="btn btn-danger"><a  href="{% url 'contDelete' content_id=queryset.id %}">Delete</a></button>
+            
+            </div>    
+        </div>
+
+
+       
+    </body>
+</html>
