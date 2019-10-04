@@ -40,7 +40,10 @@ INSTALLED_APPS = [
     'userApp',
     'taggit',
     'taggit_templatetags2',
+    'crispy_forms',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

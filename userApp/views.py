@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,render_to_response
 from .models import Content,Category
 from django.utils import timezone
 from .forms import ContentForm
@@ -21,10 +21,9 @@ class ContList(LoginRequiredMixin,TemplateView):
     template_name = "contentList.html"
 
     def get(self, request, **kwargs):
-        queryset = Content.objects.filter(date_published__lte = timezone.now()).order_by('date_published')
+        contents = Content.objects.filter(date_published__lte = timezone.now()).order_by('date_published')
         category_list = Category.objects.all()
-        user = settings.AUTH_USER_MODEL
-        return render(request,self.template_name, {"queryset":queryset, "category_list": category_list, "user": user})
+        return render(request,self.template_name, {"queryset":contents, "category_list": category_list})
     
     
 
@@ -37,6 +36,15 @@ class CategoryList(TemplateView):
         category_list = Category.objects.all()
         
         return render(request,self.template_name, {"queryset":queryset, "category_list": category_list})
+
+class TagList(TemplateView):
+    template_name = "contentList.html"
+    def get(self,request,**kwargs):
+        tag = kwargs.get('tag')
+
+        queryset = Content.objects.filter(tags__name = tag)
+        
+        return render(request,self.template_name, {"queryset":queryset})
         
 
 #def contDetail(request,pk):
@@ -45,15 +53,14 @@ class CategoryList(TemplateView):
 
 
 class ContDetail(LoginRequiredMixin,TemplateView):
-    model = Content
     template_name = "contentDetail.html"
     login_url = '/accounts/login/'
 
     def get(self, request, **kwargs):
         content_id = kwargs.get('content_id')
-        queryset = get_object_or_404(Content,pk = content_id)
+        content = get_object_or_404(Content,pk = content_id)
         #queryset = Content.objects.get(pk=content_id)
-        return render(request,self.template_name, {'cont' : content_id, 'queryset':queryset})
+        return render(request,self.template_name, {'cont' : content_id, 'queryset':content})
 
 
 #def contNew(request):
@@ -89,6 +96,13 @@ class ContNew(LoginRequiredMixin,TemplateView):
             queryset.save()
             form.save_m2m()
             return redirect('contList')
+        
+        return render(request,self.template_name, {'form':form})
+
+
+
+        
+        
 
 
 
@@ -112,23 +126,25 @@ class ContEdit(TemplateView):
     form = ContentForm
 
     def get(self, *args, **kwargs):
-        form = self.form()
+        
         content_id = kwargs.get('content_id')
-        queryset = Content.objects.get(pk=content_id)
-        form = ContentForm(instance=queryset)
-        return render(self.request,self.template_name, {'cont' : content_id, 'queryset':queryset,'form':form})
+        content = Content.objects.get(pk=content_id)
+        form = self.form(instance=content)
+        return render(self.request,self.template_name, {'form':form})
 
     def post(self,request,**kwargs):
         content_id = kwargs.get('content_id')
-        queryset = Content.objects.get(pk=content_id)
-        form = self.form(request.POST,request.FILES,instance=queryset)
+        content = Content.objects.get(pk=content_id)
+        form = self.form(request.POST,request.FILES,instance=content)
         if form.is_valid():
-            queryset = form.save(commit=False)
-            queryset.author = request.user
-            queryset.date_published = timezone.now()
-            queryset.save()
+            form_data = form.save(commit=False)
+            form_data.author = request.user
+            form_data.date_published = timezone.now()
+            form_data.save()
             form.save_m2m()
             return redirect('contList')
+
+        return render(request,self.template_name, {'form':form})
         
 #def contDelete(request,pk):
 #    cont = Content.objects.get(pk=pk)
@@ -137,11 +153,10 @@ class ContEdit(TemplateView):
 
 class ContDelete(TemplateView):
 
-    def get(self,request,**kwargs):
+    def post(self,request,**kwargs):
         content_id = kwargs.get('content_id')
-        
-        queryset = Content.objects.get(pk=content_id)
-        queryset.image.delete(save=True)
-        queryset.delete()
+        content = Content.objects.get(pk=content_id, author=request.user)
+        content.image.delete(save=True)
+        content.delete()
         return redirect('contList')
     

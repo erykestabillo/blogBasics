@@ -7,6 +7,7 @@ from .views import (ContList,
                     ContEdit,
                     ContDelete,
                     CategoryList,
+                    TagList,
                     )
 
 urlpatterns = [
@@ -16,4 +17,5 @@ urlpatterns = [
     path('content/edit/<int:content_id>/', ContEdit.as_view(), name = 'contEdit'),
     path('content/delete/<int:content_id>', ContDelete.as_view(), name = 'contDelete'),
     path('category/<int:category_id>/', CategoryList.as_view(), name = 'catList'),
+    path('tags/<str:tag>/', TagList.as_view(), name = 'tagList'),
 ]

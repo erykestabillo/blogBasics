@@ -1,19 +1,29 @@
     
     {% extends 'base.html' %}
         
-  
+    {% load crispy_forms_tags %}
 
     {% block content %}
 
 
             <h2>Add new post</h2>
             <div class="form-group">
-                <form enctype="multipart/form-data" method="POST">{% csrf_token %}
-            
-                    {{ form.as_p }}
-                
+                <form enctype="multipart/form-data" method="POST" novalidate > {% csrf_token %}
+                    
+                    {% for field in form %}
+                    <ul id="frms">
+                            {{ field.label }}  {{ field }} {{ field.errors }}
+                    </ul>
+                    
+                       
+                    {% endfor %}
+
+                    
+                    
                 <button type="submit" class="btn btn-default">Save</button>
                 </form>
+
+
             </div>
 
 

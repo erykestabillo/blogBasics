@@ -14,7 +14,7 @@
                 <p>{{ queryset.cont }}</p>
 
                 {% for tag in queryset.get_tags %}
-                    <i class="badge">{{tag}}</i>
+                    <i class="badge"><a href="{% url 'tagList' tag %}">{{tag}}</a></i>
                 {% endfor %}
                 <br>
                 <br>
