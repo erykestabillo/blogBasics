@@ -1,44 +1,37 @@
-<!DOCTYPE html>
-{% load static %}
-<html>
-    <head>
-        <title>Newbie Blog</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">   
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>   
-        <link rel="stylesheet" href="{% static 'css/userApp.css' %}">
-    </head>
+    
+    {% extends 'base.html' %}
+        
 
-    <body>
-        <div class="jumbotron text-center">
-                <h1><a href="/">First newbie Blog</a></h1>
-                <p>Wassap mananap!!!</p> 
-        </div>
-        <div>
-                
-        </div>
+
+        {% block content %}
         
-        
-        <div class="container">
-                <button type="button" class="btn btn-warning"><a href="{% url 'contNew' %}" >Add new</a></button>
+
             
-            <div class="row">
+
+            <div class="dropdown">
+                <button type="button" class="btn btn-warning"><a href="{% url 'contNew' %}" >Add new</a></button>
+                <button class="btn btn-info dropdown-toggle pull-right " type="button" data-toggle="dropdown"><a href="">Select Category</a><span class="caret"></span></button>
+
+                <ul class="dropdown-menu dropdown-menu-right ">
+                    {% for cat in category_list %}
+                        <li><a href="{% url 'catList' category_id=cat.id %}">{{ cat.title }}</a></li>
+                    {% endfor %}
+                </ul>
                 
+              </div>
+            
+
+            <div class="row">
                 {% for con in queryset %}
                     <div class="col-sm-3">
                         <h2><a href="{% url 'contDetail' content_id=con.id %}">{{ con.title }}</a></h2>
                         <p>{{ con.cont }}</p>
-                        <p>{{ con.datePublished }}</p>
+                        <p>{{ con.date_published }}</p>
                     </div>
                 {% endfor %}
             </div>    
-        </div>
-              
-        
+
 
    
     </body>
-</html>
+    {% endblock %}

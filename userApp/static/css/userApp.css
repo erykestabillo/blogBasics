@@ -24,6 +24,16 @@
     color: black;
     font-weight: bold;
  }
+  .btn-info a{
+    color: black;
+    font-weight: bold;
+    text-align: right;
+ }
+
+#logoutbtn a{
+  color: black;
+  font-weight: bold;
+}
 
   .text-center a{
     color: black;
@@ -35,6 +45,10 @@
     font-weight: bold;
   }
 
+  .badge {
+    background-color: lightskyblue;
+    color: black;
+  }
 
 
 
